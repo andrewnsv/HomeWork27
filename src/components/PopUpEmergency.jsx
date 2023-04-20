@@ -1,14 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { wsContext } from "../providers/wsProvider";
 
 const PopUpEmergency = () => {
   const wsCtx = useContext(wsContext);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      wsCtx.setEmergencyMessage(null);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [wsCtx]);
+
   const closePopUpHandler = () => {
     wsCtx.setEmergencyMessage(null);
   };
-
-  setTimeout(closePopUpHandler, 3000);
 
   return (
     <>
